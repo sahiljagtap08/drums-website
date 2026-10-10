@@ -3,63 +3,137 @@ import { useState } from "react";
 import { Accordion, type Item } from "./Accordion";
 import { Reveal } from "./Reveal";
 import { Cloud } from "./ui";
+import { Drum } from "./Mark";
+import { AppleMark, LinuxMark, WindowsMark } from "./icons";
 
 const INK = "#383838";
 const items: Item[] = [
   { title: "Share what's identical", body: "The operating system, applications, and starting files are loaded once and mapped into every attempt." },
   { title: "Isolate what's different", body: "Each attempt gets its own files, browser sessions, and application state. Agents can take different actions without affecting one another." },
   { title: "Reset in an instant", body: "When an attempt ends, its changes are dropped and the next one starts from the shared state. No reboot, no re-download." },
-  { title: "More attempts per machine", body: "Shared pages are loaded once; each attempt only pays memory for what it changes. That delta, not the full OS image, is what sets how many attempts fit on one machine." },
+  { title: "More attempts per machine", body: "Shared pages are loaded once; each attempt only pays memory for what it changes. That delta, not the full OS image, sets how many attempts fit on one machine." },
 ];
 
-const lanes = [
-  { x: 90, label: "ATTEMPT 01", fill: "#ceebff", line: "#2ba5ff" },
-  { x: 250, label: "ATTEMPT 02", fill: "#fff8b0", line: "#ebcd00" },
-  { x: 410, label: "ATTEMPT 03", fill: "#ffdcbd", line: "#ff9538" },
-  { x: 570, label: "AGENT FLEET", fill: "#b0fff4", line: "#16aa98" },
+/* ---------- isometric slab ---------- */
+const W = 250, D = 125, H = 34; // top rhombus width/depth, extrusion height
+function Slab({ cx, cy, top, left, right, l1, l2, text = "#fff", dim }: { cx: number; cy: number; top: string; left: string; right: string; l1: string; l2: string; text?: string; dim: boolean }) {
+  const T = `${cx},${cy - D / 2}`, R = `${cx + W / 2},${cy}`, B = `${cx},${cy + D / 2}`, L = `${cx - W / 2},${cy}`;
+  const Bh = `${cx},${cy + D / 2 + H}`, Lh = `${cx - W / 2},${cy + H}`, Rh = `${cx + W / 2},${cy + H}`;
+  return (
+    <g style={{ opacity: dim ? 0.72 : 1, transition: "opacity 300ms ease-in-out" }}>
+      <polygon points={`${L} ${B} ${Bh} ${Lh}`} fill={left} stroke={INK} strokeWidth="2" strokeLinejoin="round" />
+      <polygon points={`${B} ${R} ${Rh} ${Bh}`} fill={right} stroke={INK} strokeWidth="2" strokeLinejoin="round" />
+      <polygon points={`${T} ${R} ${B} ${L}`} fill={top} stroke={INK} strokeWidth="2" strokeLinejoin="round" />
+      {/* labels sit on the two front faces, skewed to match them */}
+      <text transform={`translate(${cx - W / 2 + 14} ${cy + 22}) skewY(26.57)`} fontFamily="var(--font-mono)" fontSize="12.5" fill={text} letterSpacing="0.06em">{l1}</text>
+      <text transform={`translate(${cx + 14} ${cy + D / 2 + 22}) skewY(-26.57)`} fontFamily="var(--font-mono)" fontSize="12.5" fill={text} letterSpacing="0.06em">{l2}</text>
+    </g>
+  );
+}
+
+/* ---------- annotation card ---------- */
+function Card({ x, y, w, h, fill = "#fff", raised, children }: { x: number; y: number; w: number; h: number; fill?: string; raised: boolean; children: React.ReactNode }) {
+  return (
+    <g style={{ transition: "transform 200ms ease-in-out", transform: raised ? "translate(3px,-3px)" : "none" }}>
+      <rect x={x - 5} y={y + 5} width={w} height={h} fill={INK} style={{ opacity: raised ? 1 : 0, transition: "opacity 200ms ease-in-out" }} />
+      <rect x={x} y={y} width={w} height={h} fill={fill} stroke={INK} strokeWidth="2" />
+      <g transform={`translate(${x} ${y})`}>{children}</g>
+    </g>
+  );
+}
+const Label = ({ x, y, children }: { x: number; y: number; children: string }) => (
+  <text x={x} y={y} fontFamily="var(--font-mono)" fontSize="12" fill={INK} letterSpacing="0.04em">{children}</text>
+);
+const Body = ({ x, y, lines }: { x: number; y: number; lines: string[] }) => (
+  <text x={x} y={y} fontFamily="var(--font-sans)" fontSize="12.5" fill="#575757">
+    {lines.map((l, i) => <tspan key={i} x={x} dy={i === 0 ? 0 : 16}>{l}</tspan>)}
+  </text>
+);
+
+const ATT = [
+  { a: "#2ba5ff", b: "#1673c7", chip: "#ceebff", n: "01" },
+  { a: "#16aa98", b: "#0d7a6d", chip: "#b0fff4", n: "02" },
+  { a: "#ff7169", b: "#c94a43", chip: "#ffcbc8", n: "03" },
+  { a: "#ebcd00", b: "#b39b00", chip: "#fff8b0", n: "04" },
 ];
 
 function Diagram({ active }: { active: number }) {
+  const cx = 390;
+  const dark = { top: "#5c5c5c", left: "#383838", right: "#2b2b2b" };
   return (
-    <svg viewBox="0 0 660 470" className="w-full h-auto" role="img" aria-label="Four independent attempts converge into one shared running OS">
-      {lanes.map((l, i) => (
-        <g key={l.label}>
-          <rect x={l.x - 44} y="20" width="88" height="22" fill={l.fill} stroke={INK} strokeWidth="1.5" />
-          <text x={l.x} y="35" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10.5" fill={INK}>{l.label}</text>
-          {/* small drum per lane */}
-          <g className="bob" style={{ ["--d" as string]: `${i * 0.4}s` }}>
-            <path d={`M${l.x - 16},62 v16 a16,7 0 0 0 32,0 v-16`} fill={l.fill} stroke={INK} strokeWidth="1.5" />
-            <ellipse cx={l.x} cy="62" rx="16" ry="7" fill="#fff" stroke={INK} strokeWidth="1.5" />
-            <circle cx={l.x - 5} cy="75" r="1.6" fill={INK} /><circle cx={l.x + 5} cy="75" r="1.6" fill={INK} />
+    <svg viewBox="0 0 780 600" className="w-full h-auto" role="img" aria-label="Isometric stack: a shared macOS, applications and starting files loaded once, with per-attempt state on top">
+      {/* connectors, solid and thin */}
+      <g fill="none" stroke={INK} strokeWidth="1.5">
+        <path d="M256 160 C 300 160, 290 230, 330 240" />
+        <path d="M232 470 C 280 470, 270 420, 300 410" />
+        <path d="M540 130 C 500 130, 500 215, 452 235" />
+        <path d="M530 430 C 500 430, 500 360, 470 330" />
+      </g>
+
+      {/* the stack, bottom to top */}
+      <Slab cx={cx} cy={480} {...dark} l1="SHARED OS" l2="MACOS" dim={active !== 0} />
+      <Slab cx={cx} cy={405} {...dark} l1="APPLICATIONS" l2="LOADED ONCE" dim={active !== 0} />
+      <Slab cx={cx} cy={330} {...dark} l1="STARTING" l2="FILES" dim={active !== 0} />
+      <Slab cx={cx} cy={255} top="#ffde00" left="#e3c600" right="#c9af00" text={INK} l1="ATTEMPT" l2="STATE" dim={active === 0} />
+      {/* attempts live on the top face */}
+      {ATT.map((t, i) => {
+        const px = cx - 60 + i * 40, py = 255 + 4;
+        return (
+          <g key={t.n} className="bob" style={{ ["--d" as string]: `${i * 0.35}s` }}>
+            <Drum x={px - 16} y={py - 31} w={32} a={t.a} b={t.b} />
           </g>
-          {/* own-state pill */}
-          <rect x={l.x - 40} y="100" width="80" height="20" fill={INK} />
-          <text x={l.x} y="114" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fill="#fff">OWN STATE</text>
-          {/* lane line curving into the shared drum */}
-          <path d={`M${l.x} 120 V 180 C ${l.x} 230, 330 220, 330 270`} fill="none" stroke={l.line} strokeWidth="5" strokeLinecap="round" opacity={active === 1 ? 1 : 0.6} style={{ transition: "opacity 300ms ease-in-out" }} />
-          <path d={`M${l.x} 120 V 180 C ${l.x} 230, 330 220, 330 270`} fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" className="flow" />
+        );
+      })}
+
+      {/* attempts card */}
+      <Card x={20} y={110} w={236} h={118} raised={active === 1}>
+        <Label x={16} y={24}>ATTEMPTS</Label>
+        {ATT.map((t, i) => (
+          <g key={t.n} transform={`translate(${16 + i * 48} 36)`}>
+            <rect width="42" height="42" fill={t.chip} stroke={INK} strokeWidth="1.5" />
+            <Drum x={9} y={10} w={24} a={t.a} b={t.b} />
+          </g>
+        ))}
+        <Body x={16} y={98} lines={["Own files, sessions, and state.", "No attempt sees another."]} />
+      </Card>
+
+      {/* reset card */}
+      <Card x={30} y={420} w={202} h={96} fill="#ffde00" raised={active === 2}>
+        <Label x={16} y={24}>RESET</Label>
+        <Body x={16} y={46} lines={["Drop the delta, start the next", "attempt from shared state.", "No reboot. No re-download."]} />
+      </Card>
+
+      {/* runs-on card */}
+      <Card x={540} y={90} w={210} h={82} raised={false}>
+        <Label x={16} y={24}>RUNS ON</Label>
+        <g transform="translate(16 36)">
+          <rect width="80" height="30" fill="#ceebff" stroke={INK} strokeWidth="1.5" />
+          <foreignObject x="9" y="7" width="16" height="16"><AppleMark className="w-4 h-4 text-ink" /></foreignObject>
+          <text x="31" y="20" fontFamily="var(--font-mono)" fontSize="11" fill={INK}>MACOS</text>
         </g>
-      ))}
-      {/* shared drum in a glass */}
-      <g className="bob" style={{ animationPlayState: active === 2 ? "running" : "paused" }}>
-        <ellipse cx="330" cy="350" rx="90" ry="34" fill="#ceebff" stroke={INK} strokeWidth="1.5" opacity=".6" />
-        <path d="M240 290 v60 a90,34 0 0 0 180,0 v-60" fill="#ceebff" stroke={INK} strokeWidth="1.5" opacity=".5" />
-        <ellipse cx="330" cy="290" rx="90" ry="34" fill="#e6f4ff" stroke={INK} strokeWidth="1.5" opacity=".7" />
-        <path d="M292 318 v26 a38,15 0 0 0 76,0 v-26" fill="#ffdcbd" stroke={INK} strokeWidth="2" />
-        <ellipse cx="330" cy="318" rx="38" ry="15" fill="#ffe9d6" stroke={INK} strokeWidth="2" />
-        <path d="M292 298 v26 a38,15 0 0 0 76,0 v-26" fill="#ff9538" stroke={INK} strokeWidth="2" />
-        <ellipse cx="330" cy="298" rx="38" ry="15" fill="#ffb570" stroke={INK} strokeWidth="2" />
-        <path d="M330 298 h20 v14 h-20 z" fill={INK} />
-        <circle cx="320" cy="316" r="2.4" fill={INK} /><circle cx="340" cy="316" r="2.4" fill={INK} />
-      </g>
-      {/* base card */}
-      <g transform="translate(90 396)">
-        <rect x="6" y="6" width="480" height="58" fill={INK} />
-        <rect width="480" height="58" fill="#f4efea" stroke={INK} strokeWidth="2" />
-        <rect x="16" y="12" width="112" height="20" fill="#ceebff" stroke={INK} strokeWidth="1.5" />
-        <text x="72" y="26" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10.5" fill={INK}>SHARED STATE</text>
-        <text x="16" y="48" fontFamily="var(--font-mono)" fontSize="10.5" fill="#575757">OPERATING SYSTEM · APPLICATIONS · STARTING FILES · LOADED ONCE</text>
-      </g>
+        <g transform="translate(104 36)" opacity="0.55">
+          <rect width="36" height="30" fill="#fff" stroke={INK} strokeWidth="1.5" />
+          <foreignObject x="10" y="7" width="16" height="16"><LinuxMark className="w-4 h-4 text-ink" /></foreignObject>
+        </g>
+        <g transform="translate(148 36)" opacity="0.55">
+          <rect width="36" height="30" fill="#fff" stroke={INK} strokeWidth="1.5" />
+          <foreignObject x="10" y="7" width="16" height="16"><WindowsMark className="w-4 h-4 text-ink" /></foreignObject>
+        </g>
+      </Card>
+
+      {/* scale card */}
+      <Card x={530} y={330} w={220} h={200} raised={active === 3}>
+        <Label x={16} y={24}>ONE MACHINE</Label>
+        <Body x={16} y={42} lines={["Each pays only for its delta"]} />
+        {ATT.map((t, i) => (
+          <g key={t.n} transform={`translate(16 ${56 + i * 30})`}>
+            <rect width={100 + i * 24} height="24" fill={t.chip} stroke={INK} strokeWidth="1.5" />
+            <Drum x={7} y={5} w={14} a={t.a} b={t.b} />
+            <text x="28" y="16" fontFamily="var(--font-mono)" fontSize="10.5" fill={INK}>ATTEMPT {t.n}</text>
+          </g>
+        ))}
+        <text x="16" y="190" fontFamily="var(--font-mono)" fontSize="10.5" fill="#575757">+ MANY MORE · SAME HARDWARE</text>
+      </Card>
     </svg>
   );
 }
@@ -68,7 +142,7 @@ export function HowItWorks() {
   const [active, setActive] = useState(0);
   return (
     <section id="how" className="relative bg-sky-3 border-y-2 border-ink overflow-hidden">
-      <Cloud className="absolute w-[220px] -top-4 right-[6%] drift" />
+      <Cloud className="hidden md:block absolute w-[220px] -top-4 right-[6%] drift" />
       <Cloud className="absolute w-[180px] bottom-6 left-[2%] drift" flip />
       <div className="relative mx-auto max-w-[1240px] px-5 py-16 md:py-24">
         <Reveal>
@@ -77,7 +151,7 @@ export function HowItWorks() {
             Agents learn by practicing: millions of attempts, each from the same starting state. Today every attempt gets its own virtual machine, so the same OS, apps, and files load millions of times. Drums loads them once and isolates only what each attempt changes.
           </p>
         </Reveal>
-        <div className="mt-10 grid md:grid-cols-[400px_1fr] gap-10 items-start">
+        <div className="mt-10 grid lg:grid-cols-[380px_1fr] gap-10 items-start">
           <Reveal delay={100}><Accordion items={items} onChange={setActive} /></Reveal>
           <Reveal delay={200}><Diagram active={active} /></Reveal>
         </div>
