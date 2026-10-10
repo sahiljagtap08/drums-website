@@ -2,7 +2,6 @@ import { Button, Arrow } from "./ui";
 import { HeroScene } from "./HeroScene";
 import { Reveal } from "./Reveal";
 import { CAL_URL } from "@/lib/site";
-import Image from "next/image";
 
 export function Hero() {
   return (
@@ -29,17 +28,6 @@ export function Hero() {
           </Reveal>
           <Reveal delay={300} className="mt-5 label !text-ink-2">
             Starting with macOS · Linux and Windows next
-          </Reveal>
-          <Reveal delay={400} className="mt-12">
-            <div className="label !text-ink-2 mb-3">Trusted by</div>
-            <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
-              <span className="flex items-center gap-2 text-[18px] font-semibold tracking-tight">
-                <Image src="/logos/twentyfour26-mark.svg" alt="" width={22} height={22} /> twentyfour26
-              </span>
-              <span className="text-[20px] font-semibold tracking-tight" style={{ fontFamily: "ui-rounded, 'SF Pro Rounded', var(--font-sans)" }}>
-                Layman
-              </span>
-            </div>
           </Reveal>
         </div>
         <Reveal delay={150} className="relative">
