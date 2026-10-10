@@ -1,25 +1,29 @@
-import Link from "next/link";
 import { Mark } from "./Mark";
+import { Button } from "./ui";
 import { CAL_URL } from "@/lib/site";
+
+const links = [
+  ["How it works", "#how"],
+  ["What we measure", "#measure"],
+  ["Contact", "#contact"],
+];
 
 export function Nav() {
   return (
-    <header className="sticky top-0 z-20 bg-white/95 backdrop-blur border-b hairline">
-      <div className="mx-auto max-w-[1280px] px-5 flex items-center h-12">
-        <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight text-[15px]">
-          <Mark className="w-4 h-4 text-ink" /> Drums
-        </Link>
-        <nav className="hidden md:flex gap-6 ml-10 text-[12.5px] text-ink-2">
-          <a href="#approach" className="hover:text-ink">Approach</a>
-          <a href="#research" className="hover:text-ink">Research</a>
-          <a href="#teams" className="hover:text-ink">Teams</a>
-          <a href="#founders" className="hover:text-ink">Founders</a>
+    <header className="sticky top-0 z-30 bg-cream/95 backdrop-blur border-b-2 border-ink">
+      <div className="mx-auto max-w-[1240px] px-5 h-[72px] flex items-center gap-8">
+        <a href="#top" className="flex items-center gap-2.5 wiggle">
+          <Mark className="w-8 h-8" />
+          <span className="font-semibold text-[22px] tracking-tight">Drums</span>
+        </a>
+        <nav className="hidden md:flex items-center gap-7 ml-4">
+          {links.map(([t, h]) => (
+            <a key={t} href={h} className="md-link !text-[13px]"><span>{t}</span></a>
+          ))}
         </nav>
-        <div className="ml-auto flex items-stretch h-12">
-          <a href="#contact" className="hidden sm:flex items-center px-5 border-l hairline label !text-ink hover:bg-neutral-50">Contact</a>
-          <a href={CAL_URL} target="_blank" rel="noopener" className="flex items-center gap-2 px-5 bg-ink text-white label !text-white hover:bg-black">
-            Talk to us <span aria-hidden>›</span>
-          </a>
+        <div className="ml-auto flex items-center gap-3">
+          <a href="#contact" className="hidden sm:inline md-link !text-[13px]"><span>Email us</span></a>
+          <Button href={CAL_URL} external>Talk to us</Button>
         </div>
       </div>
     </header>

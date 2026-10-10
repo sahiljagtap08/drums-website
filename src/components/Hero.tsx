@@ -1,39 +1,45 @@
+import { Button, Arrow } from "./ui";
+import { HeroScene } from "./HeroScene";
+import { Reveal } from "./Reveal";
 import { CAL_URL } from "@/lib/site";
+import Image from "next/image";
 
 export function Hero() {
   return (
-    <section className="border-b hairline">
-      <div className="mx-auto max-w-[1280px] grid md:grid-cols-[1fr_380px]">
-        <div className="px-5 pt-28 pb-14 md:pt-40 md:pb-20">
-          <div className="flex items-center gap-2 mb-6">
-            <span className="w-2 h-2 bg-ink inline-block" />
-            <span className="label !text-ink">Infrastructure for computer-use training</span>
-          </div>
-          <h1 className="text-[44px] leading-[0.98] sm:text-[64px] md:text-[80px] lg:text-[92px] font-medium tracking-[-0.035em] max-w-[11ch]">
-            More computer-use training on less hardware.
-          </h1>
-        </div>
-        <aside className="relative border-t md:border-t-0 md:border-l hairline px-5 py-8 md:py-10 flex flex-col">
-          <div className="font-mono text-[13px] tracking-wide">
-            DRUMS <span className="blink">_</span>
-          </div>
-          <div className="mt-auto pt-16 md:pt-40">
-            <div className="flex flex-col items-start gap-1 mb-5 text-ink-3 text-[10px] leading-none font-mono">
-              <span className="opacity-40">▲</span><span className="opacity-70">▲</span><span>▼</span>
-            </div>
-            <p className="text-[15px] leading-snug text-ink-2 max-w-[30ch]">
-              lets researchers run more independent training attempts on the same machine by sharing what&apos;s identical and isolating what&apos;s different. Starting with macOS.
+    <section id="top" className="relative overflow-hidden">
+      <div className="mx-auto max-w-[1240px] px-5 pt-16 pb-14 md:pt-24 md:pb-20 grid md:grid-cols-[1.05fr_1fr] gap-10 items-center">
+        <div>
+          <Reveal>
+            <h1 className="h-mono text-[40px] sm:text-[52px] lg:text-[64px]">More computer-use training on less hardware</h1>
+          </Reveal>
+          <Reveal delay={100}>
+            <p className="mt-6 text-[18px] md:text-[20px] leading-relaxed text-ink max-w-[52ch]">
+              Drums builds computers that make it cheaper to train computer-use agents. Many training attempts share one running OS, and each one keeps its own files, sessions, and state.
             </p>
-            <div className="flex flex-wrap gap-2 mt-6">
-              <a href={CAL_URL} target="_blank" rel="noopener" className="label !text-white bg-ink px-4 py-2.5 hover:bg-black">
-                Talk to us ›
-              </a>
-              <a href="#approach" className="label !text-ink border border-ink px-4 py-2.5 hover:bg-neutral-50">
-                Our approach
-              </a>
+          </Reveal>
+          <Reveal delay={200} className="mt-8 flex flex-wrap items-center gap-4">
+            <Button href={CAL_URL} external>Talk to us <Arrow /></Button>
+            <Button href="#how" variant="ghost">How it works</Button>
+          </Reveal>
+          <Reveal delay={300} className="mt-5 label !text-ink-2">
+            Starting with macOS · Linux and Windows next
+          </Reveal>
+          <Reveal delay={400} className="mt-12">
+            <div className="label !text-ink-2 mb-3">Trusted by builders</div>
+            <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
+              <span className="flex items-center gap-2 text-[18px] font-semibold tracking-tight">
+                <Image src="/logos/twentyfour26-mark.svg" alt="" width={22} height={22} /> twentyfour26
+                <span className="w-1.5 h-1.5 rounded-full bg-orange" />
+              </span>
+              <span className="flex items-center gap-2 text-[20px] font-semibold tracking-tight" style={{ fontFamily: "ui-rounded, 'SF Pro Rounded', var(--font-sans)" }}>
+                Layman <span className="w-1.5 h-1.5 rounded-full bg-sky" />
+              </span>
             </div>
-          </div>
-        </aside>
+          </Reveal>
+        </div>
+        <Reveal delay={150} className="relative">
+          <HeroScene />
+        </Reveal>
       </div>
     </section>
   );

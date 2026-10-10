@@ -1,14 +1,10 @@
 import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/Hero";
-import { DrumScene } from "@/components/DrumScene";
-import { Lifecycle } from "@/components/Lifecycle";
-import { Footer } from "@/components/Footer";
-import { Topology } from "@/components/Topology";
-import { Pillars } from "@/components/Pillars";
-import { Teams } from "@/components/Teams";
+import { Problem } from "@/components/Problem";
+import { HowItWorks } from "@/components/HowItWorks";
 import { Measure } from "@/components/Measure";
-import { Founders } from "@/components/Founders";
-import { Contact } from "@/components/Contact";
+import { CTA } from "@/components/CTA";
+import { Footer } from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -16,14 +12,10 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
-        <DrumScene />
-        <Topology />
-        <Pillars />
-        <Lifecycle />
-        <Teams />
+        <Problem />
+        <HowItWorks />
         <Measure />
-        <Founders />
-        <Contact />
+        <CTA />
       </main>
       <Footer />
     </>
