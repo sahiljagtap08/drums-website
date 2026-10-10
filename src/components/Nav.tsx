@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { Mark } from "./Mark";
+import { IconPen, IconFlask } from "./icons";
 import { Button } from "./ui";
 import { CAL_URL } from "@/lib/site";
 
@@ -9,8 +10,8 @@ const links: [string, string][] = [
   ["What we measure", "/#measure"],
 ];
 const resources = [
-  { t: "Blog", d: "Engineering notes and product updates", h: "/blog", chip: "#ceebff" },
-  { t: "Research", d: "What we're measuring and why", h: "/research", chip: "#fff8b0" },
+  { t: "Blog", d: "Engineering notes and product updates", h: "/blog", chip: "#ceebff", Icon: IconPen },
+  { t: "Research", d: "What we're measuring and why", h: "/research", chip: "#fff8b0", Icon: IconFlask },
 ];
 
 function Chevron({ open }: { open: boolean }) {
@@ -61,7 +62,7 @@ export function Nav() {
                 {resources.map((r) => (
                   <a key={r.t} href={r.h} className="flex items-start gap-3 p-3 rounded-[2px] hover:bg-cream transition-colors duration-150">
                     <span className="mt-0.5 w-8 h-8 shrink-0 border-2 border-ink flex items-center justify-center" style={{ background: r.chip }}>
-                      <Mark className="w-4 h-4" />
+                      <r.Icon className="w-[18px] h-[18px]" />
                     </span>
                     <span>
                       <span className="block font-semibold text-[15px] leading-tight">{r.t}</span>

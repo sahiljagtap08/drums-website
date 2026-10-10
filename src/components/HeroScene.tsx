@@ -34,13 +34,6 @@ export function HeroScene() {
         ))}
       </g>
       <circle cx={CX} cy={CY} r="140" fill="#fff8b0" stroke={INK} strokeWidth="2" />
-      {/* connectors: straight, aligned to drum centres, drawn under everything */}
-      <g fill="none" stroke={INK} strokeWidth="2" className="flow">
-        {attempts.map((t) => {
-          const tx = t.x + SMALL / 2, ty = t.y + SMALL * 0.48;
-          return <line key={t.label} x1={CX} y1={CY} x2={tx} y2={ty} />;
-        })}
-      </g>
       {/* attempts: the small drums pop in and out */}
       {attempts.map((t) => (
         <g key={t.label} className="pop" style={{ ["--d" as string]: `${t.delay}s` }}>
@@ -63,10 +56,6 @@ export function HeroScene() {
         <text x="73" y="26" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10.5" fill={INK}>SHARED OS + APPS</text>
         <text x="14" y="48" fontFamily="var(--font-mono)" fontSize="10" fill="#575757">ONE RUNNING MACOS · LOADED ONCE</text>
       </g>
-      {/* doodles */}
-      <path d="M512 470 l10 -18 l10 18 z" fill="none" stroke={INK} strokeWidth="2" strokeLinejoin="round" />
-      <circle cx="36" cy="470" r="8" fill="none" stroke={INK} strokeWidth="2" />
-      <path d="M30 30 h14 v10 h-14 z" fill="#6fc2ff" stroke={INK} strokeWidth="2" transform="rotate(-12 37 35)" />
     </svg>
   );
 }

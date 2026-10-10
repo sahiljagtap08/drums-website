@@ -16,11 +16,11 @@ const items: Item[] = [
 
 /* ---------- isometric slab ---------- */
 const W = 250, D = 125, H = 34; // top rhombus width/depth, extrusion height
-function Slab({ cx, cy, top, left, right, l1, l2, text = "#fff", dim }: { cx: number; cy: number; top: string; left: string; right: string; l1: string; l2: string; text?: string; dim: boolean }) {
+function Slab({ cx, cy, top, left, right, l1, l2, text = "#fff", dim, onHover, idx }: { cx: number; cy: number; top: string; left: string; right: string; l1: string; l2: string; text?: string; dim: boolean; onHover: (i: number | null) => void; idx: number }) {
   const T = `${cx},${cy - D / 2}`, R = `${cx + W / 2},${cy}`, B = `${cx},${cy + D / 2}`, L = `${cx - W / 2},${cy}`;
   const Bh = `${cx},${cy + D / 2 + H}`, Lh = `${cx - W / 2},${cy + H}`, Rh = `${cx + W / 2},${cy + H}`;
   return (
-    <g style={{ opacity: dim ? 0.72 : 1, transition: "opacity 300ms ease-in-out" }}>
+    <g style={{ opacity: dim ? 0.72 : 1, transition: "opacity 300ms ease-in-out, transform 200ms ease-in-out", transform: dim ? "none" : "translateY(-3px)", cursor: "default" }} onMouseEnter={() => onHover(idx)} onMouseLeave={() => onHover(null)}>
       <polygon points={`${L} ${B} ${Bh} ${Lh}`} fill={left} stroke={INK} strokeWidth="2" strokeLinejoin="round" />
       <polygon points={`${B} ${R} ${Rh} ${Bh}`} fill={right} stroke={INK} strokeWidth="2" strokeLinejoin="round" />
       <polygon points={`${T} ${R} ${B} ${L}`} fill={top} stroke={INK} strokeWidth="2" strokeLinejoin="round" />
@@ -32,9 +32,9 @@ function Slab({ cx, cy, top, left, right, l1, l2, text = "#fff", dim }: { cx: nu
 }
 
 /* ---------- annotation card ---------- */
-function Card({ x, y, w, h, fill = "#fff", raised, children }: { x: number; y: number; w: number; h: number; fill?: string; raised: boolean; children: React.ReactNode }) {
+function Card({ x, y, w, h, fill = "#fff", raised, idx, onHover, children }: { x: number; y: number; w: number; h: number; fill?: string; raised: boolean; idx: number | null; onHover: (i: number | null) => void; children: React.ReactNode }) {
   return (
-    <g style={{ transition: "transform 200ms ease-in-out", transform: raised ? "translate(3px,-3px)" : "none" }}>
+    <g style={{ transition: "transform 200ms ease-in-out", transform: raised ? "translate(3px,-3px)" : "none", cursor: "default" }} onMouseEnter={() => onHover(idx)} onMouseLeave={() => onHover(null)}>
       <rect x={x - 5} y={y + 5} width={w} height={h} fill={INK} style={{ opacity: raised ? 1 : 0, transition: "opacity 200ms ease-in-out" }} />
       <rect x={x} y={y} width={w} height={h} fill={fill} stroke={INK} strokeWidth="2" />
       <g transform={`translate(${x} ${y})`}>{children}</g>
@@ -57,7 +57,8 @@ const ATT = [
   { a: "#ebcd00", b: "#b39b00", chip: "#fff8b0", n: "04" },
 ];
 
-function Diagram({ active }: { active: number }) {
+function Diagram({ active: selected, onHover }: { active: number; onHover: (i: number | null) => void }) {
+  const active = selected;
   const cx = 390;
   const dark = { top: "#5c5c5c", left: "#383838", right: "#2b2b2b" };
   return (
@@ -71,10 +72,10 @@ function Diagram({ active }: { active: number }) {
       </g>
 
       {/* the stack, bottom to top */}
-      <Slab cx={cx} cy={480} {...dark} l1="SHARED OS" l2="MACOS" dim={active !== 0} />
-      <Slab cx={cx} cy={405} {...dark} l1="APPLICATIONS" l2="LOADED ONCE" dim={active !== 0} />
-      <Slab cx={cx} cy={330} {...dark} l1="STARTING" l2="FILES" dim={active !== 0} />
-      <Slab cx={cx} cy={255} top="#ffde00" left="#e3c600" right="#c9af00" text={INK} l1="ATTEMPT" l2="STATE" dim={active === 0} />
+      <Slab cx={cx} cy={480} {...dark} idx={0} onHover={onHover} l1="SHARED OS" l2="MACOS" dim={active !== 0} />
+      <Slab cx={cx} cy={405} {...dark} idx={0} onHover={onHover} l1="APPLICATIONS" l2="LOADED ONCE" dim={active !== 0} />
+      <Slab cx={cx} cy={330} {...dark} idx={0} onHover={onHover} l1="STARTING" l2="FILES" dim={active !== 0} />
+      <Slab cx={cx} cy={255} top="#ffde00" left="#e3c600" right="#c9af00" text={INK} idx={1} onHover={onHover} l1="ATTEMPT" l2="STATE" dim={active !== 1} />
       {/* attempts live on the top face */}
       {ATT.map((t, i) => {
         const px = cx - 60 + i * 40, py = 255 + 4;
@@ -86,7 +87,7 @@ function Diagram({ active }: { active: number }) {
       })}
 
       {/* attempts card */}
-      <Card x={20} y={110} w={236} h={118} raised={active === 1}>
+      <Card x={20} y={110} w={236} h={118} raised={active === 1} idx={1} onHover={onHover}>
         <Label x={16} y={24}>ATTEMPTS</Label>
         {ATT.map((t, i) => (
           <g key={t.n} transform={`translate(${16 + i * 48} 36)`}>
@@ -98,13 +99,13 @@ function Diagram({ active }: { active: number }) {
       </Card>
 
       {/* reset card */}
-      <Card x={30} y={420} w={202} h={96} fill="#ffde00" raised={active === 2}>
+      <Card x={30} y={420} w={202} h={96} fill="#ffde00" raised={active === 2} idx={2} onHover={onHover}>
         <Label x={16} y={24}>RESET</Label>
         <Body x={16} y={46} lines={["Drop the delta, start the next", "attempt from shared state.", "No reboot. No re-download."]} />
       </Card>
 
       {/* runs-on card */}
-      <Card x={540} y={90} w={210} h={82} raised={false}>
+      <Card x={540} y={90} w={210} h={82} raised={active === 4} idx={4} onHover={onHover}>
         <Label x={16} y={24}>RUNS ON</Label>
         <g transform="translate(16 36)">
           <rect width="80" height="30" fill="#ceebff" stroke={INK} strokeWidth="1.5" />
@@ -122,7 +123,7 @@ function Diagram({ active }: { active: number }) {
       </Card>
 
       {/* scale card */}
-      <Card x={530} y={330} w={220} h={200} raised={active === 3}>
+      <Card x={530} y={330} w={220} h={200} raised={active === 3} idx={3} onHover={onHover}>
         <Label x={16} y={24}>ONE MACHINE</Label>
         <Body x={16} y={42} lines={["Each pays only for its delta"]} />
         {ATT.map((t, i) => (
@@ -140,6 +141,7 @@ function Diagram({ active }: { active: number }) {
 
 export function HowItWorks() {
   const [active, setActive] = useState(0);
+  const [hover, setHover] = useState<number | null>(null);
   return (
     <section id="how" className="relative bg-sky-3 border-y-2 border-ink overflow-hidden">
       <Cloud className="hidden md:block absolute w-[220px] -top-4 right-[6%] drift" />
@@ -153,7 +155,7 @@ export function HowItWorks() {
         </Reveal>
         <div className="mt-10 grid lg:grid-cols-[380px_1fr] gap-10 items-start">
           <Reveal delay={100}><Accordion items={items} onChange={setActive} /></Reveal>
-          <Reveal delay={200}><Diagram active={active} /></Reveal>
+          <Reveal delay={200}><Diagram active={hover ?? active} onHover={setHover} /></Reveal>
         </div>
       </div>
     </section>

@@ -15,11 +15,11 @@ const includes = [
 
 export default function Pricing() {
   return (
-    <Page title="Pricing" lede="Priced per machine, sized to your training workload. Tell us your attempt volume and we'll quote it on the call." wide>
+    <Page title="Pricing" lede="Public pricing is out soon. Until then, tell us your attempt volume and we'll quote it on the call." wide>
       <div className="md-card is-raised-lg max-w-[560px] p-7 md:p-9">
         <div className="label !text-ink-2">Teams</div>
-        <div className="h-mono text-[48px] md:text-[64px] leading-none mt-3">Custom</div>
-        <p className="mt-3 text-[16px] text-ink-2">Per machine · monthly</p>
+        <div className="h-mono text-[48px] md:text-[64px] leading-none mt-3">Out soon!</div>
+        <p className="mt-3 text-[16px] text-ink-2">Per machine · monthly. Early access is open now.</p>
         <div className="mt-6"><Button href={CAL_URL} external>Talk to us <Arrow /></Button></div>
         <hr className="my-7 border-t-2 border-ink/15" />
         <ul className="space-y-3 text-[15.5px]">

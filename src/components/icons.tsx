@@ -33,6 +33,22 @@ export function IconShield({ className = "w-5 h-5" }: P) {
   );
 }
 
+export function IconPen({ className = "w-5 h-5" }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" stroke={INK} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" aria-hidden>
+      <path d="M4 20h16" /><path d="M6 16l9.5-9.5 3 3L9 19H6z" fill="#fff" /><path d="M13.5 8.5l3 3" />
+    </svg>
+  );
+}
+export function IconFlask({ className = "w-5 h-5" }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" stroke={INK} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" aria-hidden>
+      <path d="M9 3h6M10 3v6l-5.5 9A2 2 0 0 0 6.2 21h11.6a2 2 0 0 0 1.7-3L14 9V3" fill="#fff" />
+      <path d="M7.5 15h9" /><circle cx="11" cy="17.5" r="1" fill={INK} stroke="none" /><circle cx="14" cy="18.5" r=".8" fill={INK} stroke="none" />
+    </svg>
+  );
+}
+
 /* OS marks */
 export function AppleMark({ className = "w-4 h-4" }: P) {
   return (
