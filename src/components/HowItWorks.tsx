@@ -44,16 +44,20 @@ function Slab({ cx, cy, l1, l2, on, topic, onHover }: { cx: number; cy: number; 
   const Bh: [number, number] = [cx, cy + D / 2 + H], Lh: [number, number] = [cx - W / 2, cy + H], Rh: [number, number] = [cx + W / 2, cy + H];
   const c = TOPIC[topic];
   const tr = "fill 200ms ease-in-out, transform 200ms ease-in-out";
+  const sil = rounded([L, T, R, Rh, Bh, Lh], 10);
+  const id = `slab-${topic}-${cy}`;
   return (
     <g style={{ transition: tr, transform: on ? "translateY(-4px)" : "none", cursor: "default" }} onMouseEnter={() => onHover(topic)} onMouseLeave={() => onHover(null)}>
-      {/* silhouette: sides */}
-      <path d={rounded([L, T, R, Rh, Bh, Lh], 10)} fill={on ? c.side : DARK.left} stroke={INK} strokeWidth="2" style={{ transition: tr }} />
-      <path d={`M${B[0]},${B[1]} L${Bh[0]},${Bh[1]}`} stroke={INK} strokeWidth="2" />
-      <path d={`M${B[0]},${B[1]} L${R[0]},${R[1]} L${Rh[0]},${Rh[1]} L${Bh[0]},${Bh[1]}Z`} fill={on ? c.side : DARK.right} opacity={on ? 0.75 : 1} style={{ transition: tr }} />
+      <defs><clipPath id={id}><path d={sil} /></clipPath></defs>
+      {/* silhouette = both side faces; right half shaded inside the clip so edges stay clean */}
+      <path d={sil} fill={on ? c.side : DARK.left} style={{ transition: tr }} />
+      <rect x={cx} y={cy} width={W} height={D + H} fill="#000" opacity="0.22" clipPath={`url(#${id})`} />
+      <path d={`M${B[0]},${B[1]} L${Bh[0]},${Bh[1]}`} stroke={INK} strokeWidth="2" clipPath={`url(#${id})`} />
+      <path d={sil} fill="none" stroke={INK} strokeWidth="2" />
       {/* top face */}
       <path d={rounded([T, R, B, L], 10)} fill={on ? c.fill : DARK.top} stroke={INK} strokeWidth="2" style={{ transition: tr }} />
-      <text transform={`translate(${cx - W / 2 + 18} ${cy + 22}) skewY(26.57)`} fontFamily="var(--font-mono)" fontSize="12.5" fill="#fff" letterSpacing="0.06em">{l1}</text>
-      <text transform={`translate(${cx + 14} ${cy + D / 2 + 22}) skewY(-26.57)`} fontFamily="var(--font-mono)" fontSize="12.5" fill="#fff" letterSpacing="0.06em">{l2}</text>
+      <text transform={`translate(${cx - W / 2 + 20} ${cy + 33}) skewY(26.57)`} fontFamily="var(--font-mono)" fontSize="12" fill="#fff" letterSpacing="0.06em">{l1}</text>
+      <text transform={`translate(${cx + 16} ${cy + D / 2 + 17}) skewY(-26.57)`} fontFamily="var(--font-mono)" fontSize="12" fill="#fff" letterSpacing="0.06em">{l2}</text>
     </g>
   );
 }
@@ -97,10 +101,10 @@ function Diagram({ active, onHover }: { active: number; onHover: (i: number | nu
   return (
     <svg viewBox="0 0 780 600" className="w-full h-auto" role="img" aria-label="Isometric stack: a shared macOS, applications and starting files loaded once, with per-attempt state on top. Each note is linked to one layer.">
       {/* threads: drawn first so slabs and cards sit on top */}
-      <Thread topic={1} on={active === 1} d={`M256 170 C 300 170, 290 ${Y.state + 60}, ${lf(Y.state)}`} />
-      <Thread topic={2} on={active === 2} d={`M232 450 C 280 450, 280 ${Y.files + 60}, ${lf(Y.files)}`} />
+      <Thread topic={1} on={active === 1} d={`M256 180 C 300 180, 290 ${Y.state + 60}, ${lf(Y.state)}`} />
+      <Thread topic={2} on={active === 2} d={`M242 456 C 285 456, 280 ${Y.files + 60}, ${lf(Y.files)}`} />
       <Thread topic={3} on={active === 3} d={`M530 210 C 490 210, 500 ${Y.apps + 60}, ${rf(Y.apps)}`} />
-      <Thread topic={0} on={active === 0} d={`M540 480 C 500 480, 500 ${Y.os + 60}, ${rf(Y.os)}`} />
+      <Thread topic={0} on={active === 0} d={`M540 486 C 500 486, 500 ${Y.os + 60}, ${rf(Y.os)}`} />
 
       {/* the stack, bottom to top */}
       <Slab cx={cx} cy={Y.os} l1="SHARED OS" l2="MACOS" topic={0} on={active === 0} onHover={onHover} />
@@ -117,7 +121,7 @@ function Diagram({ active, onHover }: { active: number; onHover: (i: number | nu
       })}
 
       {/* attempts → attempt state */}
-      <Card x={20} y={110} w={236} h={118} topic={1} on={active === 1} onHover={onHover}>
+      <Card x={20} y={110} w={236} h={140} topic={1} on={active === 1} onHover={onHover}>
         <Label x={16} y={24}>ATTEMPTS</Label>
         {ATT.map((t, i) => (
           <g key={t.n} transform={`translate(${16 + i * 48} 36)`}>
@@ -125,17 +129,17 @@ function Diagram({ active, onHover }: { active: number; onHover: (i: number | nu
             <Drum x={9} y={10} w={24} a={t.a} b={t.b} />
           </g>
         ))}
-        <Body x={16} y={98} lines={["Own files, sessions, and state.", "No attempt sees another."]} />
+        <Body x={16} y={104} lines={["Own files, sessions, and state.", "No attempt sees another."]} />
       </Card>
 
       {/* reset → starting files */}
-      <Card x={30} y={400} w={202} h={96} topic={2} on={active === 2} onHover={onHover}>
+      <Card x={30} y={400} w={212} h={112} topic={2} on={active === 2} onHover={onHover}>
         <Label x={16} y={24}>RESET</Label>
-        <Body x={16} y={46} lines={["Drop the delta, start the next", "attempt from shared state.", "No reboot. No re-download."]} />
+        <Body x={16} y={50} lines={["Drop the delta, start the next", "attempt from shared state.", "No reboot. No re-download."]} />
       </Card>
 
       {/* one machine → applications */}
-      <Card x={530} y={110} w={220} h={200} topic={3} on={active === 3} onHover={onHover}>
+      <Card x={530} y={110} w={224} h={210} topic={3} on={active === 3} onHover={onHover}>
         <Label x={16} y={24}>ONE MACHINE</Label>
         <Body x={16} y={42} lines={["Each pays only for its delta"]} />
         {ATT.map((t, i) => (
@@ -145,22 +149,22 @@ function Diagram({ active, onHover }: { active: number; onHover: (i: number | nu
             <text x="28" y="16" fontFamily="var(--font-mono)" fontSize="10.5" fill={INK}>ATTEMPT {t.n}</text>
           </g>
         ))}
-        <text x="16" y="190" fontFamily="var(--font-mono)" fontSize="10.5" fill="#575757">+ MANY MORE · SAME HARDWARE</text>
+        <text x="16" y="196" fontFamily="var(--font-mono)" fontSize="10.5" fill="#575757">+ MANY MORE · SAME HARDWARE</text>
       </Card>
 
       {/* runs on → shared OS */}
-      <Card x={540} y={440} w={210} h={82} topic={0} on={active === 0} onHover={onHover}>
+      <Card x={540} y={440} w={214} h={92} topic={0} on={active === 0} onHover={onHover}>
         <Label x={16} y={24}>RUNS ON</Label>
-        <g transform="translate(16 36)">
+        <g transform="translate(16 40)">
           <rect width="80" height="30" fill="#fff" stroke={INK} strokeWidth="1.5" />
           <foreignObject x="9" y="7" width="16" height="16"><AppleMark className="w-4 h-4 text-ink" /></foreignObject>
           <text x="31" y="20" fontFamily="var(--font-mono)" fontSize="11" fill={INK}>MACOS</text>
         </g>
-        <g transform="translate(104 36)" opacity="0.55">
+        <g transform="translate(104 40)" opacity="0.55">
           <rect width="36" height="30" fill="#fff" stroke={INK} strokeWidth="1.5" />
           <foreignObject x="10" y="7" width="16" height="16"><LinuxMark className="w-4 h-4 text-ink" /></foreignObject>
         </g>
-        <g transform="translate(148 36)" opacity="0.55">
+        <g transform="translate(148 40)" opacity="0.55">
           <rect width="36" height="30" fill="#fff" stroke={INK} strokeWidth="1.5" />
           <foreignObject x="10" y="7" width="16" height="16"><WindowsMark className="w-4 h-4 text-ink" /></foreignObject>
         </g>
