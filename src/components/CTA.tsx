@@ -6,7 +6,7 @@ import { CAL_URL, EMAILS } from "@/lib/site";
 export function CTA() {
   return (
     <section id="contact" className="relative bg-yellow border-y-2 border-ink overflow-hidden">
-      <div className="absolute -right-6 top-8 w-[150px] md:w-[220px] bob" aria-hidden>
+      <div className="hidden md:block absolute -right-6 top-8 w-[220px] bob" aria-hidden>
         <Mark className="w-full" />
       </div>
       <div className="relative mx-auto max-w-[1240px] px-5 py-16 md:py-24">
@@ -16,7 +16,8 @@ export function CTA() {
             We&apos;re talking with researchers and teams running reinforcement learning, large evaluations, or repeated rollouts in real desktop environments. Tell us how you run these workloads today, what they cost, and where you hit limits.
           </p>
         </Reveal>
-        <Reveal delay={120} className="mt-8 md-card p-6 md:p-8 grid md:grid-cols-[1fr_auto] gap-6 items-center max-w-[860px]">
+        <Reveal delay={120} className="mt-8 max-w-[860px]">
+          <div className="md-card p-6 md:p-8 grid md:grid-cols-[1fr_auto] gap-6 items-center">
           <div>
             <div className="label !text-ink-2 mb-2">Fastest path</div>
             <div className="h-mono text-[22px]">Book 20 minutes with the founders</div>
@@ -26,6 +27,7 @@ export function CTA() {
             </div>
           </div>
           <Button href={CAL_URL} external>Talk to us <Arrow /></Button>
+          </div>
         </Reveal>
       </div>
     </section>

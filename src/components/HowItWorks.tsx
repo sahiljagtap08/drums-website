@@ -6,10 +6,10 @@ import { Cloud } from "./ui";
 
 const INK = "#383838";
 const items: Item[] = [
-  { title: "Share what's identical", body: "Every attempt loads the same operating system, the same applications, and the same starting state. Drums loads them once and lets every attempt use them." },
+  { title: "Share what's identical", body: "The operating system, applications, and starting files are loaded once and mapped into every attempt." },
   { title: "Isolate what's different", body: "Each attempt gets its own files, browser sessions, and application state. Agents can take different actions without affecting one another." },
   { title: "Reset in an instant", body: "When an attempt ends, its changes are dropped and the next one starts from the shared state. No reboot, no re-download." },
-  { title: "More attempts per machine", body: "Our target is 3 to 5 times as many concurrent training attempts on the same hardware versus one virtual machine per attempt. A target, not a result yet. We publish numbers as we validate." },
+  { title: "More attempts per machine", body: "Shared pages are loaded once; each attempt only pays memory for what it changes. That delta, not the full OS image, is what sets how many attempts fit on one machine." },
 ];
 
 const lanes = [
@@ -30,18 +30,18 @@ function Diagram({ active }: { active: number }) {
           <g className="bob" style={{ ["--d" as string]: `${i * 0.4}s` }}>
             <path d={`M${l.x - 16},62 v16 a16,7 0 0 0 32,0 v-16`} fill={l.fill} stroke={INK} strokeWidth="1.5" />
             <ellipse cx={l.x} cy="62" rx="16" ry="7" fill="#fff" stroke={INK} strokeWidth="1.5" />
-            <circle cx={l.x - 5} cy="72" r="1.6" fill={INK} /><circle cx={l.x + 5} cy="72" r="1.6" fill={INK} />
+            <circle cx={l.x - 5} cy="75" r="1.6" fill={INK} /><circle cx={l.x + 5} cy="75" r="1.6" fill={INK} />
           </g>
           {/* own-state pill */}
           <rect x={l.x - 40} y="100" width="80" height="20" fill={INK} />
           <text x={l.x} y="114" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fill="#fff">OWN STATE</text>
           {/* lane line curving into the shared drum */}
-          <path d={`M${l.x} 120 V 180 C ${l.x} 230, 330 220, 330 270`} fill="none" stroke={l.line} strokeWidth="5" strokeLinecap="round" opacity={active === 1 ? 1 : 0.85} />
+          <path d={`M${l.x} 120 V 180 C ${l.x} 230, 330 220, 330 270`} fill="none" stroke={l.line} strokeWidth="5" strokeLinecap="round" opacity={active === 1 ? 1 : 0.6} style={{ transition: "opacity 300ms ease-in-out" }} />
           <path d={`M${l.x} 120 V 180 C ${l.x} 230, 330 220, 330 270`} fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" className="flow" />
         </g>
       ))}
       {/* shared drum in a glass */}
-      <g className={active === 2 ? "bob" : ""}>
+      <g className="bob" style={{ animationPlayState: active === 2 ? "running" : "paused" }}>
         <ellipse cx="330" cy="350" rx="90" ry="34" fill="#ceebff" stroke={INK} strokeWidth="1.5" opacity=".6" />
         <path d="M240 290 v60 a90,34 0 0 0 180,0 v-60" fill="#ceebff" stroke={INK} strokeWidth="1.5" opacity=".5" />
         <ellipse cx="330" cy="290" rx="90" ry="34" fill="#e6f4ff" stroke={INK} strokeWidth="1.5" opacity=".7" />
@@ -50,7 +50,7 @@ function Diagram({ active }: { active: number }) {
         <path d="M292 298 v26 a38,15 0 0 0 76,0 v-26" fill="#ff9538" stroke={INK} strokeWidth="2" />
         <ellipse cx="330" cy="298" rx="38" ry="15" fill="#ffb570" stroke={INK} strokeWidth="2" />
         <path d="M330 298 h20 v14 h-20 z" fill={INK} />
-        <circle cx="320" cy="306" r="2.4" fill={INK} /><circle cx="340" cy="306" r="2.4" fill={INK} />
+        <circle cx="320" cy="316" r="2.4" fill={INK} /><circle cx="340" cy="316" r="2.4" fill={INK} />
       </g>
       {/* base card */}
       <g transform="translate(90 396)">
@@ -74,7 +74,7 @@ export function HowItWorks() {
         <Reveal>
           <h2 className="h-mono text-[32px] md:text-[44px]">One OS. Many attempts.</h2>
           <p className="mt-4 text-[18px] max-w-[60ch] leading-relaxed">
-            Today, researchers run a separate virtual computer for every attempt, even though each one loads the same OS, applications, and starting state. Drums shares the identical parts and isolates the rest.
+            Agents learn by practicing: millions of attempts, each from the same starting state. Today every attempt gets its own virtual machine, so the same OS, apps, and files load millions of times. Drums loads them once and isolates only what each attempt changes.
           </p>
         </Reveal>
         <div className="mt-10 grid md:grid-cols-[400px_1fr] gap-10 items-start">

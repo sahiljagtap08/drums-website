@@ -18,11 +18,11 @@ export function Nav() {
         </a>
         <nav className="hidden md:flex items-center gap-7 ml-4">
           {links.map(([t, h]) => (
-            <a key={t} href={h} className="md-link !text-[13px]"><span>{t}</span></a>
+            <a key={t} href={h} className="md-link !text-[14px]"><span>{t}</span></a>
           ))}
         </nav>
         <div className="ml-auto flex items-center gap-3">
-          <a href="#contact" className="hidden sm:inline md-link !text-[13px]"><span>Email us</span></a>
+          <a href="#contact" className="hidden sm:inline-flex md-link !text-[14px]"><span>Email us</span></a>
           <Button href={CAL_URL} external>Talk to us</Button>
         </div>
       </div>

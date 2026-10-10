@@ -23,7 +23,7 @@ function LittleDrum({ x, y, fill, top, delay, label, labelFill }: { x: number; y
       </g>
       {/* eyes */}
       <g className="blink">
-        <circle cx={x - 7} cy={y + 9} r="2.2" fill={INK} /><circle cx={x + 7} cy={y + 9} r="2.2" fill={INK} />
+        <circle cx={x - 7} cy={y + 17} r="2.2" fill={INK} /><circle cx={x + 7} cy={y + 17} r="2.2" fill={INK} />
       </g>
     </g>
   );
@@ -39,10 +39,10 @@ export function HeroScene() {
       <g className="drift">
         <path d="M430 70c-8 0-14-5-14-12 0-6 5-11 11-12 2-10 10-17 20-17 8 0 15 4 19 11 3-2 7-4 11-4 9 0 17 6 18 16 2-1 4-1 6-1 7 0 13 5 13 12 0 4-2 8-6 10H430z" fill="#fff" stroke={INK} strokeWidth="2" strokeLinejoin="round" />
       </g>
-      {/* sun rays, slow spin */}
-      <g className="spin-slow" opacity=".55">
-        {Array.from({ length: 16 }).map((_, i) => (
-          <line key={i} x1="280" y1="300" x2={280 + 230 * Math.cos((i / 16) * Math.PI * 2)} y2={300 + 230 * Math.sin((i / 16) * Math.PI * 2)} stroke="#ffde00" strokeWidth="10" strokeLinecap="round" opacity=".35" />
+      {/* sun rays, slow spin: flat wedges */}
+      <g className="spin-slow">
+        {Array.from({ length: 12 }).map((_, i) => (
+          <path key={i} d="M280 148 L 268 62 L 292 62 Z" fill="#ffde00" stroke={INK} strokeWidth="2" strokeLinejoin="round" transform={`rotate(${i * 30} 280 300)`} />
         ))}
       </g>
       <circle cx="280" cy="300" r="150" fill="#fff8b0" stroke={INK} strokeWidth="2" />
@@ -59,11 +59,11 @@ export function HeroScene() {
         <DrumTier x={280} y={292} r={70} h={38} fill="#ffdcbd" top="#ffe9d6" />
         <DrumTier x={280} y={246} r={70} h={38} fill="#ffdcbd" top="#ffe9d6" />
         <DrumTier x={280} y={200} r={70} h={38} fill="#ff9538" top="#ffb570" />
-        <g className="blink"><circle cx="262" cy="216" r="3.5" fill={INK} /><circle cx="298" cy="216" r="3.5" fill={INK} /></g>
-        <path d="M268 232q12 8 24 0" fill="none" stroke={INK} strokeWidth="2" strokeLinecap="round" />
+        <g className="blink"><circle cx="262" cy="227" r="3.5" fill={INK} /><circle cx="298" cy="227" r="3.5" fill={INK} /></g>
+        <path d="M270 234q10 7 20 0" fill="none" stroke={INK} strokeWidth="2" strokeLinecap="round" />
       </g>
       {/* lines from big drum to little drums */}
-      <g fill="none" stroke={INK} strokeWidth="1.5" className="flow" opacity=".7">
+      <g fill="none" stroke={INK} strokeWidth="2" className="flow">
         <path d="M225 250 C 170 250, 160 230, 120 226" />
         <path d="M335 250 C 390 250, 400 220, 440 216" />
         <path d="M232 300 C 180 310, 170 330, 128 322" />

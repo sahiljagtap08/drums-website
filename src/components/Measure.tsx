@@ -31,17 +31,19 @@ export function Measure() {
             </Reveal>
           ))}
         </div>
-        <Reveal delay={200} className="mt-10 md-card p-6 md:p-8 md:flex items-center gap-8">
+        <Reveal delay={200} className="mt-10">
+          <div className="md-card p-6 md:p-8 md:flex items-center gap-8">
           <div className="shrink-0 h-mono text-[44px] md:text-[56px] leading-none">3–5×</div>
           <div>
             <div className="text-[17px] leading-relaxed">
-              <strong className="font-semibold">Our research target:</strong> 3 to 5 times as many concurrent training attempts on the same hardware. This is a target, not an achieved result. We&apos;ll publish measurements as we validate the architecture.
+              <strong className="font-semibold">Our research target:</strong> 3 to 5 times as many concurrent training attempts on the same hardware. Not yet measured; we&apos;ll publish numbers as we validate the architecture.
             </div>
             <div className="mt-3 flex flex-wrap gap-2">
               <span className="tag bg-sky-2">macOS · now</span>
               <span className="tag">Linux · planned</span>
               <span className="tag">Windows · planned</span>
             </div>
+          </div>
           </div>
         </Reveal>
         <Reveal delay={250} className="mt-8">
