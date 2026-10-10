@@ -10,7 +10,15 @@ export const metadata: Metadata = {
   description:
     "Drums builds computers that make it cheaper to train computer-use agents. Many training attempts share one running OS. Starting with macOS.",
   metadataBase: new URL("https://drums.run"),
-  openGraph: { title: "Drums", description: "More computer-use training on less hardware.", url: "https://drums.run" },
+  openGraph: {
+    title: "Drums — More computer-use training on less hardware",
+    description: "Virtual computers for training computer-use agents. Many training attempts share one running OS. Starting with macOS.",
+    url: "https://drums.run",
+    siteName: "Drums",
+    type: "website",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "More computer-use training on less hardware" }],
+  },
+  twitter: { card: "summary_large_image", title: "Drums — More computer-use training on less hardware", images: ["/og.png"] },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
