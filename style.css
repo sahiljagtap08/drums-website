@@ -53,9 +53,3 @@ footer a { border-bottom-color: #bbb; }
   main { padding: 80px 20px 60px; }
   header { flex-direction: column; gap: 6px; }
 }
-@media (prefers-color-scheme: dark) {
-  html { background: #0e0e0e; }
-  body { color: #e6e6e6; }
-  h2 { color: #aaa; } .muted { color: #999; } footer { color: #aaa; }
-  a { border-bottom-color: #e6e6e6; } footer a { border-bottom-color: #555; }
-}
