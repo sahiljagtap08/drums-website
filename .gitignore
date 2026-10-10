@@ -1,6 +1,9 @@
-.DS_Store
-.vercel
 node_modules
+.next
+out
+.vercel
+.pingfusi
+.DS_Store
 *.log
 .env*
-.pingfusi
+next-env.d.ts

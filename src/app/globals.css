@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-ink: #0b0b0b;
+  --color-ink-2: #4a4a4a;
+  --color-ink-3: #8a8a8a;
+  --color-paper: #ffffff;
+  --color-line: #e3e3e3;
+  --color-red: #ee2a1e;
+  --color-red-deep: #c8160c;
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}
+
+html { scroll-behavior: smooth; }
+body { background: #fff; color: #0b0b0b; -webkit-font-smoothing: antialiased; }
+
+.hairline { border-color: var(--color-line); }
+.label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-ink-3); }
+.halftone {
+  background-color: var(--color-red);
+  background-image: radial-gradient(circle at center, rgba(0,0,0,.32) 0 0.8px, transparent 1px);
+  background-size: 5px 5px;
+}
+.grain::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .35; mix-blend-mode: multiply;
+  background-image: radial-gradient(ellipse at 50% 60%, rgba(0,0,0,.8), transparent 55%);
+}
+.flow { stroke-dasharray: 4 6; animation: flow 1.6s linear infinite; }
+@keyframes flow { to { stroke-dashoffset: -20; } }
+.blink { animation: blink 1.2s steps(2, start) infinite; }
+@keyframes blink { to { visibility: hidden; } }
+@media (prefers-reduced-motion: reduce) { .flow, .blink { animation: none; } }
