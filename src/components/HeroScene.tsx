@@ -1,4 +1,5 @@
 import { Drum } from "./Mark";
+import { APPLE_PATH } from "./icons";
 
 // The hero: one big Drums drum (the shared, running OS) in front of a sun, with four
 // small attempt drums around it. All drums are the real logo mark.
@@ -12,6 +13,16 @@ const attempts: Attempt[] = [
   { x: 52,  y: 330, a: "#ff7169", b: "#c94a43", label: "ATTEMPT 03", chip: "#ffcbc8", delay: 2.4 },
   { x: 448, y: 326, a: "#ebcd00", b: "#b39b00", label: "ATTEMPT 04", chip: "#fff8b0", delay: 3.6 },
 ];
+// a small macOS badge pinned to a drum's top-right corner
+function AppleBadge({ x, y, r }: { x: number; y: number; r: number }) {
+  const s = (r * 1.15) / 24;
+  return (
+    <g>
+      <circle cx={x} cy={y} r={r} fill="#fff" stroke={INK} strokeWidth="2" />
+      <path d={APPLE_PATH} fill={INK} transform={`translate(${x - 12 * s} ${y - 12 * s}) scale(${s})`} />
+    </g>
+  );
+}
 const SMALL = 58; // width of a small drum
 const BIG = 200;
 
@@ -27,13 +38,6 @@ export function HeroScene() {
       <g className="drift">
         <path d="M400 58c-8 0-14-5-14-12 0-6 5-11 11-12 2-10 10-17 20-17 8 0 15 4 19 11 3-2 7-4 11-4 9 0 17 6 18 16 2-1 4-1 6-1 7 0 13 5 13 12 0 4-2 8-6 10H400z" fill="#fff" stroke={INK} strokeWidth="2" strokeLinejoin="round" />
       </g>
-      {/* sun: 12 wedge rays, slow spin, kept inside the frame */}
-      <g className="spin-slow">
-        {Array.from({ length: 12 }).map((_, i) => (
-          <path key={i} d={`M${CX} ${CY - 150} L ${CX - 12} ${CY - 212} L ${CX + 12} ${CY - 212} Z`} fill="#ffde00" stroke={INK} strokeWidth="2" strokeLinejoin="round" transform={`rotate(${i * 30 + 15} ${CX} ${CY})`} />
-        ))}
-      </g>
-      <circle cx={CX} cy={CY} r="140" fill="#fff8b0" stroke={INK} strokeWidth="2" />
       {/* attempts: the small drums pop in and out */}
       {attempts.map((t) => (
         <g key={t.label} className="pop" style={{ ["--d" as string]: `${t.delay}s` }}>
@@ -42,11 +46,13 @@ export function HeroScene() {
             <text x="39" y="15" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10.5" fill={INK}>{t.label}</text>
           </g>
           <Drum x={t.x} y={t.y} w={SMALL} a={t.a} b={t.b} />
+          <AppleBadge x={t.x + SMALL - 2} y={t.y + 4} r={10} />
         </g>
       ))}
       {/* the shared drum, bobbing */}
       <g className="bob">
         <Drum x={bx} y={by} w={bigW} a="#413636" b="#0A0A0A" />
+        <AppleBadge x={bx + bigW - 6} y={by + 14} r={22} />
       </g>
       {/* ground card */}
       <g transform="translate(120 440)">
