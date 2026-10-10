@@ -99,7 +99,7 @@ function Diagram({ active, onHover }: { active: number; onHover: (i: number | nu
   const lf = (cy: number) => `${cx - W / 4} ${cy + D / 4 + H / 2}`; // left face midpoint
   const rf = (cy: number) => `${cx + W / 4} ${cy + D / 4 + H / 2}`; // right face midpoint
   return (
-    <svg viewBox="0 0 780 600" className="w-full h-auto" role="img" aria-label="Isometric stack: a shared macOS, applications and starting files loaded once, with per-attempt state on top. Each note is linked to one layer.">
+    <svg viewBox="0 95 780 490" className="w-full h-auto" role="img" aria-label="Isometric stack: a shared macOS, applications and starting files loaded once, with per-attempt state on top. Each note is linked to one layer.">
       {/* threads: drawn first so slabs and cards sit on top */}
       <Thread topic={1} on={active === 1} d={`M256 180 C 300 180, 290 ${Y.state + 60}, ${lf(Y.state)}`} />
       <Thread topic={2} on={active === 2} d={`M242 456 C 285 456, 280 ${Y.files + 60}, ${lf(Y.files)}`} />
@@ -187,7 +187,7 @@ export function HowItWorks() {
             Agents learn by practicing: millions of attempts, each from the same starting state. Today every attempt gets its own virtual machine, so the same OS, apps, and files load millions of times. Drums loads them once and isolates only what each attempt changes.
           </p>
         </Reveal>
-        <div className="mt-10 grid lg:grid-cols-[380px_1fr] gap-10 items-start">
+        <div className="mt-10 grid lg:grid-cols-[380px_1fr] gap-10 items-center">
           <Reveal delay={100}><Accordion items={items} onChange={setActive} /></Reveal>
           <Reveal delay={200}><Diagram active={hover ?? active} onHover={setHover} /></Reveal>
         </div>
