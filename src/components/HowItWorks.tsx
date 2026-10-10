@@ -20,7 +20,7 @@ function Slab({ cx, cy, top, left, right, l1, l2, text = "#fff", dim, onHover, i
   const T = `${cx},${cy - D / 2}`, R = `${cx + W / 2},${cy}`, B = `${cx},${cy + D / 2}`, L = `${cx - W / 2},${cy}`;
   const Bh = `${cx},${cy + D / 2 + H}`, Lh = `${cx - W / 2},${cy + H}`, Rh = `${cx + W / 2},${cy + H}`;
   return (
-    <g style={{ opacity: dim ? 0.72 : 1, transition: "opacity 300ms ease-in-out, transform 200ms ease-in-out", transform: dim ? "none" : "translateY(-3px)", cursor: "default" }} onMouseEnter={() => onHover(idx)} onMouseLeave={() => onHover(null)}>
+    <g style={{ transition: "transform 200ms ease-in-out", transform: dim ? "none" : "translateY(-3px)", cursor: "default" }} onMouseEnter={() => onHover(idx)} onMouseLeave={() => onHover(null)}>
       <polygon points={`${L} ${B} ${Bh} ${Lh}`} fill={left} stroke={INK} strokeWidth="2" strokeLinejoin="round" />
       <polygon points={`${B} ${R} ${Rh} ${Bh}`} fill={right} stroke={INK} strokeWidth="2" strokeLinejoin="round" />
       <polygon points={`${T} ${R} ${B} ${L}`} fill={top} stroke={INK} strokeWidth="2" strokeLinejoin="round" />
