@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Drums — More computer-use training on less hardware</title>
+  <meta name="description" content="Drums is building infrastructure to run more independent computer-use training attempts on the same hardware. Starting with macOS.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><circle cx='8' cy='8' r='6' fill='%23111'/></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <span class="name">Drums</span>
+      <span class="meta">Infrastructure for computer-use AI training</span>
+    </header>
+
+    <h1>More computer-use training on less hardware.</h1>
+
+    <p>Training AI agents to operate real software requires millions of attempts across browsers, desktop applications, and operating systems. Each attempt needs an independent computer environment, and running thousands of them at once gets expensive.</p>
+
+    <p>Drums is building infrastructure to run more independent training attempts on the same hardware. We're starting with macOS.</p>
+
+    <p class="muted">[Early research and development. We're working with researchers and engineers training computer-use agents.]</p>
+
+    <h2>The problem</h2>
+
+    <p>Teaching an agent to use a computer requires more than screenshots and examples. It needs to practice. An agent might attempt the same task thousands of times, making different decisions, hitting errors, and learning from the outcomes. Every attempt must start from a known state and stay independent of the others.</p>
+
+    <p>Today, researchers commonly use virtual machines and isolated desktop environments for this. These already support snapshots and shared disk images, but running many environments concurrently still consumes substantial memory and compute. As the number of attempts grows, the infrastructure gets increasingly expensive.</p>
+
+    <h2>The approach</h2>
+
+    <p>Most training attempts begin with nearly identical environments: the same operating system, the same applications, the same initial files. What differs is what the agent does next.</p>
+
+    <p>We're investigating an architecture that lets independent attempts reuse common operating-system and application resources while isolating the changes each agent makes. One underlying pool of resources, many independent training attempts, without sacrificing isolation or the behavior of real applications.</p>
+
+    <h2>What we're measuring</h2>
+
+    <p>We're evaluating Drums against conventional virtual-machine approaches on concurrency, memory per attempt, attempts completed per hour, and correctness of isolation and reset.</p>
+
+    <p>Our initial research target is 3–5× more concurrent training attempts on the same hardware. This is a target, not an achieved result. We'll publish measurements as we validate the architecture.</p>
+
+    <p class="muted">[Starting with macOS. Linux and Windows planned.]</p>
+
+    <h2>Talk to us</h2>
+
+    <p>Are you training agents to use computers? We're speaking with researchers, infrastructure engineers, and teams running reinforcement learning, large-scale evaluations, or repeated rollouts in real desktop environments.</p>
+
+    <p>We'd love to hear how you're running these workloads today, what they cost, and where you're hitting limits. <a href="https://cal.com/drums" target="_blank" rel="noopener">Book a call with the founders</a>.</p>
+
+    <h2>Founders</h2>
+
+    <p><a href="mailto:sahil@drums.run">Sahil Jagtap</a> previously co-founded Airstitch (acquired), building infrastructure for AI agents running on remote Macs. Created AgentBudget, an open-source developer tool with 100K+ installs. Previously AI systems and infrastructure at Cerebras, Microsoft, and Trigent.</p>
+
+    <p><a href="mailto:haroon@drums.run">Harun Khan</a> previously worked at Haladir, the US Securities &amp; Exchange Commission, and Leidos, with time spent across ML and AI research and its applications.</p>
+
+    <footer>
+      <a href="mailto:sahil@drums.run">sahil@drums.run</a>
+      <span class="sep">·</span>
+      <a href="mailto:haroon@drums.run">haroon@drums.run</a>
+      <span class="sep">·</span>
+      <a href="https://cal.com/drums" target="_blank" rel="noopener">calendar</a>
+    </footer>
+  </main>
+</body>
+</html>
