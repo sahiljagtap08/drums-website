@@ -1,10 +1,10 @@
 function Node({ x, y, w, title, sub, dark = false }: { x: number; y: number; w: number; title: string; sub?: string; dark?: boolean }) {
   return (
     <g transform={`translate(${x} ${y})`}>
-      <rect width={w} height={34} rx={5} fill={dark ? "#ee2a1e" : "#fff"} stroke={dark ? "#ee2a1e" : "#0b0b0b"} strokeWidth={1.2} />
+      <rect width={w} height={34} rx={5} fill={dark ? "#0a0a0a" : "#fff"} stroke="#0a0a0a" strokeWidth={1.2} />
       <text x={12} y={21} fontSize={11.5} fontWeight={600} fill={dark ? "#fff" : "#0b0b0b"} fontFamily="var(--font-sans)">{title}</text>
       {sub && (
-        <text x={12 + title.length * 6.6 + 6} y={21} fontSize={6.5} letterSpacing={0.8} fill={dark ? "#fff" : "#ee2a1e"} fontFamily="var(--font-mono)">{sub.toUpperCase()}</text>
+        <text x={12 + title.length * 6.6 + 6} y={21} fontSize={6.5} letterSpacing={0.8} fill={dark ? "#bdbdbd" : "#8a8a8a"} fontFamily="var(--font-mono)">{sub.toUpperCase()}</text>
       )}
     </g>
   );
@@ -31,7 +31,7 @@ export function Topology() {
               </pattern>
             </defs>
             <rect width="900" height="260" fill="url(#g)" />
-            <g fill="none" stroke="#ee2a1e" strokeWidth="1.3">
+            <g fill="none" stroke="#413636" strokeWidth="1.3">
               {attempts.map((a) => (
                 <path key={a.y} d={`M190 127 C 250 127, 250 ${a.y + 17}, 300 ${a.y + 17}`} className="flow" />
               ))}
@@ -40,8 +40,8 @@ export function Topology() {
               ))}
               <path d="M770 127 H 790" className="flow" />
             </g>
-            <circle cx="190" cy="127" r="3.5" fill="#ee2a1e" />
-            <circle cx="580" cy="127" r="3.5" fill="#ee2a1e" />
+            <circle cx="190" cy="127" r="3.5" fill="#413636" />
+            <circle cx="580" cy="127" r="3.5" fill="#413636" />
             <Node x={40} y={110} w={150} title="Shared image" sub="macOS" />
             {attempts.map((a) => (
               <Node key={a.label} x={300} y={a.y} w={160} title={a.label} sub={a.sub} />

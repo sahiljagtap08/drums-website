@@ -23,7 +23,7 @@ export function Founders() {
             <div key={p.name} className={`py-10 ${i > 0 ? "md:pl-10 md:border-l hairline border-t md:border-t-0" : "md:pr-10"}`}>
               <h3 className="text-[22px] font-medium tracking-tight">{p.name}</h3>
               <p className="mt-3 text-[14.5px] leading-relaxed text-ink-2 max-w-[52ch]">{p.bio}</p>
-              <a href={`mailto:${p.email}`} className="inline-block mt-4 font-mono text-[12px] border-b border-ink hover:text-red hover:border-red">{p.email}</a>
+              <a href={`mailto:${p.email}`} className="inline-block mt-4 font-mono text-[12px] border-b border-ink hover:text-ink-3 hover:border-ink-3">{p.email}</a>
             </div>
           ))}
         </div>

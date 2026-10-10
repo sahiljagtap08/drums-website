@@ -1,33 +1,37 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-ink: #0b0b0b;
+  --color-ink: #0a0a0a;
   --color-ink-2: #4a4a4a;
   --color-ink-3: #8a8a8a;
+  --color-smoke: #413636;
   --color-paper: #ffffff;
   --color-line: #e3e3e3;
-  --color-red: #ee2a1e;
-  --color-red-deep: #c8160c;
+  --color-mist: #f5f5f3;
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
 }
 
 html { scroll-behavior: smooth; }
-body { background: #fff; color: #0b0b0b; -webkit-font-smoothing: antialiased; }
+body { background: #fff; color: #0a0a0a; -webkit-font-smoothing: antialiased; }
 
 .hairline { border-color: var(--color-line); }
 .label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-ink-3); }
-.halftone {
-  background-color: var(--color-red);
-  background-image: radial-gradient(circle at center, rgba(0,0,0,.32) 0 0.8px, transparent 1px);
-  background-size: 5px 5px;
-}
-.grain::after {
-  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .35; mix-blend-mode: multiply;
-  background-image: radial-gradient(ellipse at 50% 60%, rgba(0,0,0,.8), transparent 55%);
-}
 .flow { stroke-dasharray: 4 6; animation: flow 1.6s linear infinite; }
 @keyframes flow { to { stroke-dashoffset: -20; } }
 .blink { animation: blink 1.2s steps(2, start) infinite; }
 @keyframes blink { to { visibility: hidden; } }
-@media (prefers-reduced-motion: reduce) { .flow, .blink { animation: none; } }
+
+/* drum scene */
+.spawn { transform-box: fill-box; transform-origin: 50% 100%; animation: spawn 6s ease-in-out infinite; animation-delay: var(--d, 0s); opacity: 0; }
+@keyframes spawn {
+  0% { opacity: 0; transform: translateY(14px) scale(.92); }
+  12% { opacity: 1; transform: translateY(0) scale(1); }
+  70% { opacity: 1; transform: translateY(0) scale(1); }
+  82%, 100% { opacity: 0; transform: translateY(-10px) scale(.96); }
+}
+.breathe { transform-box: fill-box; transform-origin: 50% 50%; animation: breathe 4s ease-in-out infinite; }
+@keyframes breathe { 50% { transform: translateY(-4px); } }
+.scan { animation: scan 6s linear infinite; }
+@keyframes scan { from { transform: translateY(-40px); } to { transform: translateY(420px); } }
+@media (prefers-reduced-motion: reduce) { .flow, .blink, .spawn, .breathe, .scan { animation: none; } .spawn { opacity: 1; } }

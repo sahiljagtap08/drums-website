@@ -8,7 +8,7 @@ const rows = [
 
 export function Measure() {
   return (
-    <section id="research" className="bg-ink text-white">
+    <section className="bg-ink text-white">
       <div className="mx-auto max-w-[1280px] px-5 py-20 md:py-28 grid md:grid-cols-[1fr_1.4fr] gap-12">
         <div>
           <div className="label mb-4">The benchmark</div>

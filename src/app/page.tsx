@@ -1,6 +1,8 @@
 import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/Hero";
-import { RedBand } from "@/components/RedBand";
+import { DrumScene } from "@/components/DrumScene";
+import { Lifecycle } from "@/components/Lifecycle";
+import { Footer } from "@/components/Footer";
 import { Topology } from "@/components/Topology";
 import { Pillars } from "@/components/Pillars";
 import { Teams } from "@/components/Teams";
@@ -14,14 +16,16 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
-        <RedBand />
+        <DrumScene />
         <Topology />
         <Pillars />
+        <Lifecycle />
         <Teams />
         <Measure />
         <Founders />
         <Contact />
       </main>
+      <Footer />
     </>
   );
 }

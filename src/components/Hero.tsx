@@ -6,7 +6,7 @@ export function Hero() {
       <div className="mx-auto max-w-[1280px] grid md:grid-cols-[1fr_380px]">
         <div className="px-5 pt-28 pb-14 md:pt-40 md:pb-20">
           <div className="flex items-center gap-2 mb-6">
-            <span className="w-2 h-2 bg-red inline-block" />
+            <span className="w-2 h-2 bg-ink inline-block" />
             <span className="label !text-ink">Infrastructure for computer-use training</span>
           </div>
           <h1 className="text-[44px] leading-[0.98] sm:text-[64px] md:text-[80px] lg:text-[92px] font-medium tracking-[-0.035em] max-w-[11ch]">
@@ -18,7 +18,7 @@ export function Hero() {
             DRUMS <span className="blink">_</span>
           </div>
           <div className="mt-auto pt-16 md:pt-40">
-            <div className="flex flex-col items-start gap-1 mb-5 text-red text-[10px] leading-none font-mono">
+            <div className="flex flex-col items-start gap-1 mb-5 text-ink-3 text-[10px] leading-none font-mono">
               <span className="opacity-40">▲</span><span className="opacity-70">▲</span><span>▼</span>
             </div>
             <p className="text-[15px] leading-snug text-ink-2 max-w-[30ch]">

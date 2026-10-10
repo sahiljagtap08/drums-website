@@ -23,7 +23,7 @@ export function Pillars() {
         {items.map((it, i) => (
           <div key={it.n} className={`py-10 md:pr-10 ${i > 0 ? "md:pl-10 md:border-l hairline border-t md:border-t-0" : ""}`}>
             <h2 className="text-[20px] font-medium tracking-tight flex items-baseline gap-2">
-              <span className="font-mono text-[10px] text-red">{it.n}</span> {it.title}
+              <span className="font-mono text-[10px] text-ink-3">{it.n}</span> {it.title}
             </h2>
             <p className="mt-3 text-[14.5px] leading-relaxed text-ink-2">{it.body}</p>
           </div>

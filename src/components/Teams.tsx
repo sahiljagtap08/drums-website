@@ -4,7 +4,7 @@ export function Teams() {
   return (
     <section id="teams" className="border-b hairline">
       <div className="mx-auto max-w-[1280px] px-5 text-center pt-20 pb-14">
-        <svg viewBox="0 0 24 24" className="w-6 h-6 mx-auto mb-5 text-red" aria-hidden="true">
+        <svg viewBox="0 0 24 24" className="w-6 h-6 mx-auto mb-5 text-ink" aria-hidden="true">
           {Array.from({ length: 12 }).map((_, i) => (
             <circle key={i} cx={12 + 9 * Math.cos((i / 12) * Math.PI * 2)} cy={12 + 9 * Math.sin((i / 12) * Math.PI * 2)} r="1.3" fill="currentColor" />
           ))}
@@ -13,7 +13,7 @@ export function Teams() {
         <p className="mt-3 text-[15px] text-ink-2 max-w-[52ch] mx-auto">
           From research groups to agent startups, Drums is for anyone running reinforcement learning, large-scale evaluations, or repeated rollouts in real desktop environments.
         </p>
-        <div className="mt-8 text-red text-[10px] font-mono leading-none">▼</div>
+        <div className="mt-8 text-ink-3 text-[10px] font-mono leading-none">▼</div>
       </div>
       <div className="mx-auto max-w-[1280px] px-5 flex justify-between label pb-2">
         <span>Used by</span>

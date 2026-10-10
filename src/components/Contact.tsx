@@ -1,5 +1,4 @@
 import { CAL_URL, EMAILS } from "@/lib/site";
-import { Mark } from "./Mark";
 
 export function Contact() {
   return (
@@ -15,17 +14,12 @@ export function Contact() {
             </p>
           </div>
           <div className="flex flex-col justify-end gap-2">
-            <a href={CAL_URL} target="_blank" rel="noopener" className="label !text-white bg-red px-4 py-3 text-center hover:bg-red-deep">Book a call with the founders ›</a>
+            <a href={CAL_URL} target="_blank" rel="noopener" className="label !text-white bg-ink px-4 py-3 text-center hover:bg-black">Book a call with the founders ›</a>
             <a href={`mailto:${EMAILS.sahil}`} className="label !text-ink border border-ink px-4 py-3 text-center hover:bg-neutral-50">{EMAILS.sahil}</a>
             <a href={`mailto:${EMAILS.harun}`} className="label !text-ink border border-ink px-4 py-3 text-center hover:bg-neutral-50">{EMAILS.harun}</a>
           </div>
         </div>
       </section>
-      <footer className="mx-auto max-w-[1280px] px-5 py-6 flex flex-wrap items-center gap-4 label">
-        <span className="flex items-center gap-2 !text-ink"><Mark className="w-3 h-3 text-red" /> Drums</span>
-        <span>Early research and development</span>
-        <span className="ml-auto">© 2026 Drums</span>
-      </footer>
     </>
   );
 }
