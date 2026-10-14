@@ -1,6 +1,7 @@
 import { Button, Arrow } from "./ui";
 import { HeroScene } from "./HeroScene";
 import { Reveal } from "./Reveal";
+import { AppleMark, LinuxMark, WindowsMark } from "./icons";
 import { CAL_URL } from "@/lib/site";
 
 export function Hero() {
@@ -27,7 +28,24 @@ export function Hero() {
             <Button href="#how" variant="ghost">How it works</Button>
           </Reveal>
           <Reveal delay={300} className="mt-5 label !text-ink-2">
-            Starting with macOS · Linux and Windows next
+            <span className="inline-flex flex-wrap items-center gap-x-1.5 gap-y-1">
+              <span>Starting with</span>
+              <span className="inline-flex items-center">
+                <AppleMark className="w-[1.1em] h-[1.1em]" />
+                <span className="sr-only">macOS</span>
+                <span aria-hidden="true">,</span>
+              </span>
+              <span className="inline-flex items-center">
+                <LinuxMark className="w-[1.1em] h-[1.1em]" />
+                <span className="sr-only">Linux</span>
+              </span>
+              <span>and</span>
+              <span className="inline-flex items-center">
+                <WindowsMark className="w-[1.1em] h-[1.1em]" />
+                <span className="sr-only">Windows</span>
+              </span>
+              <span>next</span>
+            </span>
           </Reveal>
         </div>
         <Reveal delay={150} className="relative">
