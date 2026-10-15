@@ -38,12 +38,11 @@ const CSS = `
 export function DeskComputer() {
   const root = useRef<HTMLDivElement>(null);
   const input = useRef<HTMLInputElement>(null);
-  const power = useRef<HTMLButtonElement>(null);
   const status = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    if (!root.current || !input.current || !power.current || !status.current) return;
-    return mountDesk({ root: root.current, input: input.current, powerButton: power.current, status: status.current, keys: DESK.keys, initial: INITIAL_TEXT });
+    if (!root.current || !input.current || !status.current) return;
+    return mountDesk({ root: root.current, input: input.current, status: status.current, keys: DESK.keys, initial: INITIAL_TEXT });
   }, []);
 
   const s = DESK.screen;
@@ -63,15 +62,12 @@ export function DeskComputer() {
           autoCapitalize="off"
           autoCorrect="off"
           spellCheck={false}
+          aria-label="Type on the computer. Press Escape to switch the screen off or on."
           maxLength={20}
           defaultValue=""
           style={{ left: pct(s.left, WIDTH), top: pct(s.top, HEIGHT), width: pct(s.width, WIDTH), height: pct(s.height, HEIGHT) }}
         />
         <span className="desk-sr" role="status" aria-live="polite" ref={status} />
-      </div>
-      <div className="desk-hint">
-        <label htmlFor="desk-input">Type on the computer</label>
-        <button type="button" ref={power}>Switch it off</button>
       </div>
     </div>
   );

@@ -14,13 +14,12 @@ const SHIFTED: Record<string, string> = {
 interface Mount {
   root: HTMLElement;
   input: HTMLInputElement;
-  powerButton: HTMLButtonElement;
   status: HTMLElement;
   keys: string[];
   initial: string;
 }
 
-export function mountDesk({ root, input, powerButton, status, keys, initial }: Mount) {
+export function mountDesk({ root, input, status, keys, initial }: Mount) {
   const svg = root.querySelector("svg") as SVGSVGElement;
   const keyEls = keys.map((_, i) => svg.querySelector(`[data-key="${i}"]`) as SVGGElement);
   const textEl = svg.querySelector('[data-part="text"]') as SVGTextElement;
@@ -92,7 +91,6 @@ export function mountDesk({ root, input, powerButton, status, keys, initial }: M
     rockerOff.style.display = power ? "none" : "";
     led.style.opacity = power ? "" : "0.15";
     status.textContent = power ? "Computer on." : "Computer off.";
-    powerButton.textContent = power ? "Switch it off" : "Switch it on";
     write();
     run();
   }
@@ -196,12 +194,10 @@ export function mountDesk({ root, input, powerButton, status, keys, initial }: M
     }
     input.focus({ preventScroll: true });
   };
-  const onPower = () => { takeOver(); setPower(power ? 0 : 1); };
 
   input.addEventListener("input", onInput);
   input.addEventListener("keydown", onKey);
   svg.addEventListener("click", onClick);
-  powerButton.addEventListener("click", onPower);
   write();
   crtFrame();
   if (touring) run();
@@ -213,6 +209,5 @@ export function mountDesk({ root, input, powerButton, status, keys, initial }: M
     input.removeEventListener("input", onInput);
     input.removeEventListener("keydown", onKey);
     svg.removeEventListener("click", onClick);
-    powerButton.removeEventListener("click", onPower);
   };
 }
