@@ -1,0 +1,21 @@
+.dk { background: #fff; color: #1d1d1b; min-height: 100vh; font-family: var(--font-serif), Georgia, "Times New Roman", serif; -webkit-font-smoothing: antialiased; }
+.dk a { color: inherit; }
+.dk :focus-visible { outline: 2px solid #1d1d1b; outline-offset: 3px; }
+.dk-head { display: flex; align-items: center; gap: 10px; max-width: 760px; margin: 0 auto; padding: 32px 24px 0; font-size: 20px; letter-spacing: -0.01em; }
+.dk-mark { width: 24px; height: 24px; }
+.dk main { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+.dk-lede { font-weight: 400; font-size: clamp(26px, 4.4vw, 38px); line-height: 1.22; letter-spacing: -0.015em; margin: clamp(48px, 9vh, 96px) 0 0; max-width: 24em; text-wrap: balance; }
+.dk-desk { margin: clamp(28px, 5vh, 56px) auto 0; max-width: 640px; }
+.desk-hint { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-top: 18px; font-size: 15px; color: #6b6b66; }
+.desk-hint label { cursor: text; font-style: italic; }
+.desk-hint button { font: inherit; color: inherit; background: none; border: 0; padding: 10px 0 10px 12px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; min-height: 44px; }
+.dk-body { margin-top: clamp(40px, 7vh, 72px); max-width: 32em; font-size: 20px; line-height: 1.6; }
+.dk-body p { margin: 0 0 1.1em; }
+.dk-link { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+.dk-link:hover { text-decoration-thickness: 2px; }
+.dk-foot { max-width: 760px; margin: clamp(64px, 12vh, 128px) auto 0; padding: 0 24px 40px; font-size: 14px; line-height: 1.6; color: #86867f; }
+.dk-foot p { margin: 0; max-width: 46em; }
+@media (max-width: 640px) {
+  .dk-head, .dk main, .dk-foot { padding-left: 20px; padding-right: 20px; }
+  .dk-body { font-size: 18px; }
+}
