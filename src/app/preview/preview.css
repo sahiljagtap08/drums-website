@@ -11,6 +11,7 @@ html:has(.dk), body:has(.dk) { background: #fff; overscroll-behavior: none; colo
 .dk-body { margin-top: clamp(40px, 7vh, 72px); max-width: 32em; font-size: 20px; line-height: 1.6; }
 .dk-body p { margin: 0 0 1.1em; }
 .dk-body p:last-child { margin-bottom: 0; }
+.dk-links { display: flex; flex-wrap: wrap; gap: 0.35em 1.75em; }
 .dk-link { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
 .dk-link:hover { text-decoration-thickness: 2px; }
 .dk-foot { max-width: 760px; margin: clamp(72px, 12vh, 128px) auto 0; padding: 0 24px 40px; font-size: 14px; line-height: 1.9; color: #86867f; }

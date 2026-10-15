@@ -33,9 +33,15 @@ export default function PreviewPage() {
             The design shares the parts that never change, the operating system and its applications, while each attempt keeps its own files, browser
             session and application state. The aim is to cut the hardware these runs need, and with it the cost.
           </p>
-          <p>
+          <p className="dk-links">
             <a className="dk-link" href={CAL_URL} target="_blank" rel="noopener noreferrer">
               Talk to us
+            </a>
+            <a className="dk-link" href="https://drums.run/research">
+              Research
+            </a>
+            <a className="dk-link" href="https://drums.run/blog">
+              Blog
             </a>
           </p>
         </div>
